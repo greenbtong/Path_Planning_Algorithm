@@ -32,7 +32,7 @@ S = struct('s', start, 't', target, 'obs', obstacles', 'robs', .62*ones(1,size(o
 
 cost_Func = @(x) costFunc(x,S); % cost function
 vSize = [1 S.n];   % decision variables
-iter = 400; % iterations
+iter = 3; % iterations
 pop = 200; % Swarm Size
 weight = 1; % inertia weight
 w_Damp = 1; % damping ratio (inertia weight)
@@ -98,8 +98,8 @@ best_Cost = zeros(iter,1);
 % counters
 temp = 0; % iteration counter if cost doesnt change
 temp1 = 0; % re-random counter if PSO is lost
-output = VideoWriter('PSO.mp4', 'MPEG-4');
-open(output);
+%output = VideoWriter('PSO.mp4', 'MPEG-4');
+%open(output);
 
 for it=1:iter
     for i=1:pop
@@ -226,12 +226,12 @@ for it=1:iter
      plotIt(gBest.path,S);
      legend('Start', 'Target', 'Handle Points', 'Path', 'Location', 'southeast')
      title(['PSO in Environment ', num2str(Environ)]) % title
-     FF = getframe(hh);
-     writeVideo(output, FF); 
+     %FF = getframe(hh);
+     %writeVideo(output, FF); 
      pause(0.01);
     
 end
-close(output); % save video
+%close(output); % save video
 
 %% Final plot
 clf(figure(1))
