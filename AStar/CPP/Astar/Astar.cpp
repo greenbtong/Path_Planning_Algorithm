@@ -22,28 +22,24 @@ int main() {
 		int c = as.path(path);
 		for (int y = 0; y < m.width; y++) {
 			for (int x = 0; x < m.height; x++) {
-				if (m(x, y) == 1)
-					cout << "@";
+				if (m(x, y) == 1) cout << "@";
 				else {
-					if (point(x, y) == startP)
-						cout << "S";
-					else if (point(x, y) == endP)
-						cout << "E";
-					else if (find(path.begin(), path.end(), point(x, y)) != path.end())
-						cout << "x";
+					if (point(x, y) == startP) cout << "S";
+					else if (point(x, y) == endP) cout << "E";
+					else if (find(path.begin(), path.end(), point(x, y)) != path.end()) cout << "x";
 					else cout << ".";
 				}
 			}
-			cout << "\n";
+			cout << endl;
 		}
 
 		clock_t clockEnd = clock();
 		float timeCal = ((float)clockEnd - (float)clockStart);
 		cout << "\nTime to Calculate the route: " << timeCal << "ms" << endl;
-		cout << "\nStart: " << "(" << startP.x << ", " << startP.y << ") " << "\nEnd: " << "(" << endP.x << ", " << endP.y << ") ";
+		cout << "\nStart: " << "[" << startP.x << ", " << startP.y << "] " << "\nEnd: " << "[" << endP.x << ", " << endP.y << "] ";
 		cout << "\nPath cost " << c << ": ";
 		for (list<point>::iterator i = path.begin(); i != path.end(); i++) {
-			cout << "(" << (*i).x << ", " << (*i).y << ") ";
+			cout << "[" << (*i).x << ", " << (*i).y << "], ";
 		}
 		
 	}

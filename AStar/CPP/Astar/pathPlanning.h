@@ -8,17 +8,17 @@
 class point {
 public:
 	point(int a = 0, int b = 0) { x = a; y = b; }
-	bool operator == (const point& o) { return o.x == x && o.y == y; }
-	point operator + (const point& o) { return point(o.x + x, o.y + y); }
+	bool operator == (const point& op) { return op.x == x && op.y == y; }
+	point operator + (const point& op) { return point(op.x + x, op.y + y); }
 	int x, y;
 };
 
 class node {
 public:
-	bool operator == (const node& o) { return pos == o.pos; }
-	bool operator == (const point& o) { return pos == o; }
-	bool operator < (const node& o) { return dist + cost < o.dist + o.cost; }
-	point pos, parent;
+	bool operator == (const node& op) { return post == op.post; }
+	bool operator == (const point& op) { return post == op; }
+	bool operator < (const node& op) { return dist + cost < op.dist + op.cost; }
+	point post, parent;
 	int dist, cost;
 };
 
@@ -65,7 +65,7 @@ public:
 		point direction;
 
 		for (int x = 0; x < 8; x++) {
-			direction = n.pos + directions[x];
+			direction = n.post + directions[x];
 			if (direction == end) return true;
 
 			if (checkValid(direction) && m(direction.x, direction.y) != 1) {
@@ -74,8 +74,8 @@ public:
 				if (!checkPoint(direction, nc + dist)) {
 					node m;
 					m.cost = nc; m.dist = dist;
-					m.pos = direction;
-					m.parent = n.pos;
+					m.post = direction;
+					m.parent = n.post;
 					openN.push_back(m);
 				}
 			}
@@ -86,10 +86,9 @@ public:
 
 	bool check(point & s, point & e, maps & ms) {
 		node n; end = e; start = s; m = ms;
-		n.cost = 0; n.pos = s; n.parent = 0; n.dist = calcDist(s);
+		n.cost = 0; n.post = s; n.parent = 0; n.dist = calcDist(s);
 		openN.push_back(n);
 		while (!openN.empty()) {
-			//openN.sort();
 			node n = openN.front();
 			openN.pop_front();
 			closedN.push_back(n);
@@ -101,12 +100,12 @@ public:
 	int path(list<point> & path) {
 		path.push_front(end);
 		int cost = 1 + closedN.back().cost;
-		path.push_front(closedN.back().pos);
+		path.push_front(closedN.back().post);
 		point parent = closedN.back().parent;
 
 		for (list<node>::reverse_iterator i = closedN.rbegin(); i != closedN.rend(); i++) {
-			if ((*i).pos == parent && !((*i).pos == start)) {
-				path.push_front((*i).pos);
+			if ((*i).post == parent && !((*i).post == start)) {
+				path.push_front((*i).post);
 				parent = (*i).parent;
 			}
 		}
